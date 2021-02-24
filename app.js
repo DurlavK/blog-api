@@ -21,7 +21,7 @@ var app = express();
 app.use(compression());
 app.use(helmet());
 
-mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(process.env.MONGODB_URI, {useNewUrlParser: true, useUnifiedTopology: true});
 var db = mongoose.connection;
 db.on('err', console.error.bind(console, 'mongodb connection error'));
 
