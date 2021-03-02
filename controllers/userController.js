@@ -1,6 +1,8 @@
 const { body,validationResult } = require("express-validator");
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 const User = require('../models/User');
 
@@ -33,7 +35,7 @@ exports.signup = [
         user.set('password',hashedPassword);
         user.save(err=>{
           if(err) {return next(err);}
-          res.json({
+          res.status(200).json({
             message: "Sign up succesfull",
             user: req.user,
           })
@@ -43,18 +45,22 @@ exports.signup = [
   }
 ];
 
-exports.login = function(req, res, next) {
-  passport.authenticate('local', function(err, user, info) {
-    if (err) { return next(err); }
-    if (!user) { return res.status(404).json({message: 'login failed'}); }
-    req.logIn(user, function(err) {
-      if (err) { return next(err); }
-      return res.json({user: user});
-    });
-  })(req, res, next);
+exports.login = (req, res, next) => {
+  passport.authenticate('local', { session: false }, (err, user, info) => {
+      if (err || !user) {
+          return res.status(400).json({ msg: 'Something went wrong.' });
+      }
+      req.login(user, { session: false }, (error) => {
+          if (error) res.send(error);
+          const token = jwt.sign({ user }, process.env.SECRET, {
+              expiresIn: '1d',
+          });
+          return res.json({ user, token });
+      });
+  })(req, res);
 }
 
 exports.logout = function (req, res) {
   req.logout();
-  res.redirect("/");
+  res.status(200).json({msg: "logged out"});
 };

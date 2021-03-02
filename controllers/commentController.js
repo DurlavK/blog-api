@@ -6,7 +6,7 @@ var Comment = require('../models/Comment');
 
 exports.all_comments = async (req,res,next) => {
   try {
-    const comments = await Comment.find({});
+    const comments = await Comment.find({post: req.params.postid});
     if(!comments) {
       return res.status(404).json({err: "No Comments found"});
     }
