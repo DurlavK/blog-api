@@ -38,7 +38,7 @@ This project is a part of [the odin project](https://www.theodinproject.com/cour
 You need to have node and npm in your machine before installation. Follow along [this](https://github.com/nvm-sh/nvm#install-script) to install node in your machine.
 ```bash
 # Clone this repository
-$ git clone https://github.com/durlavk98/tweety
+$ git clone https://github.com/durlavk98/blog-api
 
 # Go into the repository
 $ cd blog-api
@@ -70,24 +70,32 @@ http://localhost:3000/api
 ```
 The REST api can be used as shown - 
 
+
 ### GET all posts
- Returns json data of all posts.
- - **URL**:
- /posts
- - **Method**:
- `GET`
- - **URL Params**:
-  None
- - **Data Params**:
- None
- - **Success Response**:
-    -  **Code:**  200  
-    -  **Content:**  `{ id : 12 }`
--   **Error Response:**
-    
-    -   **Code:**  404 Page Not Found 
-    -   **Content:**  `{ error : "No Posts found" }`
--   **Sample Call:**
+
+Returns json data of all posts.
+
+-  **URL**:
+	/posts
+
+-  **Method**:
+	`GET`
+
+-  **URL Params**:
+	None
+
+-  **Data Params**:
+	None
+
+-  **Success Response**
+	-  **Code:** 200 Success
+	-  **Content:**  `[{ id : 12 }, {title: 'ABCD'}, ...]`
+
+-  **Error Response:**
+	-  **Code:** 404 Page Not Found
+	-  **Content:**  `{ error : "No Posts found" }`
+
+-  **Sample Call:**
 	```
 	curl http://localhost:3000/api/posts
 	```
@@ -99,6 +107,83 @@ The REST api can be used as shown -
 	})
 	```
 
+### GET single post
+
+Returns json data of a single post.
+
+-  **URL**:
+	/posts/:id
+
+-  **Method**:
+	`GET`
+
+-  **URL Params**:
+	-  **Required:**
+	  `id=[integer]`
+
+-  **Data Params**:
+	None
+
+-  **Success Response**:
+	-  **Code:** 200 Success
+	-  **Content:**  `{ id : 12, title: 'ABCD', ... }`
+
+-  **Error Response:**
+	-  **Code:** 404 Page Not Found
+	-  **Content:**  `{ error : "Post Not found" }`
+
+-  **Sample Call:**
+  ```
+  curl http://localhost:3000/api/posts/60333a5c096a20232d5cc6e6
+
+  ```
+  OR
+  ```
+  axios.get('http://localhost:3000/api/posts/60333a5c096a20232d5cc6e6')
+  .then(res=>{
+  console.log(res.data);
+  })
+  ```
+
+### POST create post
+
+Creates a post.
+
+-  **URL**:
+	/posts
+
+-  **Method**:
+	`POST`
+
+-  **URL Params**:
+  None
+
+-  **Data Params**:
+	- **Required**
+    `title=[string]`
+    `body=[string]`
+    `author=[string]`
+
+-  **Success Response**:
+	-  **Code:** 200 Success
+	-  **Content:**  `{ id : 12, title: 'ABCD', ... }`
+
+-  **Error Response:**
+	-  **Code:** 500 Server Error
+	-  **Content:**  `{ error : "Something went wrong." }`
+
+-  **Sample Call:**
+  ```
+  curl -d "title=title1&body=body1&author=author1" -X POST http://localhost:3000/api/posts/60333a5c096a20232d5cc6e6
+
+  ```
+  OR
+  ```
+  axios.post('http://localhost:3000/api/posts', post)
+  .then(res=>{
+  console.log(res.data);
+  })
+  ```
 
 
 ## Credits
@@ -110,13 +195,14 @@ The REST api can be used as shown -
 
 ## Related
 
-[Blog frontend](https://github.com/durlavk98/portfolio) - A blog that uses [this](https://github.com/durlavk98/blog-api) api
+[Blog frontend](https://github.com/durlavk98/blog-api-frontend) - A blog that uses [this](https://github.com/durlavk98/blog-api) api
+[Blog CMS](https://github.com/durlavk98/blog-api-cms) - CMS for the blog
 
 
 ## Todo
-- [ ] Configure jwt error.
-- [ ] Upload cms to github.
-- [ ] Add all use cases.
+- [ ] Include jwt auth.
+- [x] Upload cms to github.
+- [ ] Add all use cases in How to use.
 
 ## Some of my other project on nodejs
 
