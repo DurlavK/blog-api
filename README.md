@@ -114,11 +114,11 @@ The REST api can be used as shown -
 
 
 ## Todo
-- [ ] Include jwt auth.
+- [ ] Configure jwt error.
 - [ ] Upload cms to github.
 - [ ] Add all use cases.
 
-## Some of my other project on laravel
+## Some of my other project on nodejs
 
 [Express Library](https://github.com/durlavk98/express-locallibrary-tutorial) - Library app made using nodejs, expressjs and pugjs.
 [Inventory App](https://github.com/durlavk98/inventory-application) - Store inventory app made using nodejs, expressjs and pugjs.
