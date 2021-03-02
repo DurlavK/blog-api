@@ -1,6 +1,8 @@
 const express = require('express');
+const passport = require('passport');
 
 const router = express.Router();
+
 const user_controller = require('../controllers/userController');
 const post_controller = require('../controllers/postController');
 const comment_controller = require('../controllers/commentController');
@@ -11,7 +13,7 @@ router.get('/', function(req,res,next) {
 });
 
 // POST create new post - api/posts
-router.post('/posts', post_controller.create_post);
+router.post('/posts', passport.authenticate("jwt", { session: false }) ,post_controller.create_post);
 
 // GET all posts - api/posts
 router.get('/posts', post_controller.all_posts);
@@ -20,16 +22,16 @@ router.get('/posts', post_controller.all_posts);
 router.get('/posts/:id', post_controller.single_post);
 
 // PUT update post - api/posts/:id
-router.put('/posts/:id', post_controller.update_post);
+router.put('/posts/:id', passport.authenticate("jwt", { session: false }), post_controller.update_post);
 
 // DELETE delete post - api/posts/:id
-router.delete('/posts/:id', post_controller.delete_post);
+router.delete('/posts/:id', passport.authenticate("jwt", { session: false }), post_controller.delete_post);
 
 // POST publish post
-router.post('/posts/:id/publish', post_controller.publish_post);
+router.post('/posts/:id/publish', passport.authenticate("jwt", { session: false }), post_controller.publish_post);
 
 // POST unpublish post
-router.post('/posts/:id/unpublish', post_controller.unpublish_post);
+router.post('/posts/:id/unpublish', passport.authenticate("jwt", { session: false }), post_controller.unpublish_post);
 
 // POST create new comment - api/posts/:postid/comments
 router.post('/posts/:postid/comments', comment_controller.create_comment);
@@ -41,10 +43,10 @@ router.get('/posts/:postid/comments', comment_controller.all_comments);
 router.get('/posts/:postid/comments/:commentid', comment_controller.single_comment);
 
 // PUT update comment - api/posts/:postid/comments/:commentid
-router.put('/posts/:postid/comments/:commentid', comment_controller.update_comment);
+router.put('/posts/:postid/comments/:commentid',passport.authenticate("jwt", { session: false }), comment_controller.update_comment);
 
 // DELETE delete comment - api/posts/:postid/comments/:commentid
-router.delete('/posts/:postid/comments/:commentid', comment_controller.delete_comment);
+router.delete('/posts/:postid/comments/:commentid',passport.authenticate("jwt", { session: false }), comment_controller.delete_comment);
 
 // POST user signup - api/signup
 router.post('/signup', user_controller.signup);
